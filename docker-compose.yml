@@ -1,0 +1,49 @@
+version: '3.1'
+services:
+  thumbor:
+    image: apsl/thumbor:latest
+    volumes:
+      - logs:/logs
+      - data:/data
+    environment:
+      - MAX_AGE=3600
+      - MAX_AGE_TEMP_IMAGE=300
+      - RESULT_STORAGE_EXPIRATION_SECONDS=31536000
+      - ALLOW_UNSAFE_URL=True
+      - AUTO_WEBP=True
+    restart: always
+    deploy:
+      replicas: 5
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    networks:
+      - frontend
+  nginx:
+    image: apsl/thumbor-nginx:latest
+    links:
+      - thumbor:thumbor
+    volumes:
+      - logs:/logs
+      - data:/data
+    ports:
+      - "80:80"
+    restart: always
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 30s
+      restart_policy:
+        condition: on-failure
+    networks:
+      - frontend
+volumes:
+  data:
+    driver: local
+  logs:
+    driver: local
+networks:
+  frontend:
