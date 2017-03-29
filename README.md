@@ -63,3 +63,7 @@ You should be able to hit any of those IP address and enjoy the puppy
 You can scale individual services by either modifying the docker-compose.yml file and running `docker stack deploy -c docker-compose.yml img` or running scaling commands as a one off `docker service scale img_nginx=3`
 
 
+# Visualizer for Docker Swarm
+If you are a more visual person you can run manomarks docker swarm visualizer on the manager
+- `eval $(docker-machine env manager)`
+- `docker run -it -d -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock manomarks/visualizer`
