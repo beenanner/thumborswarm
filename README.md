@@ -67,3 +67,4 @@ You can scale individual services by either modifying the docker-compose.yml fil
 If you are a more visual person you can run manomarks docker swarm visualizer on the manager
 - `eval $(docker-machine env manager)`
 - `docker run -it -d -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock manomarks/visualizer`
+- Visit `http://192.168.99.100:8080`
